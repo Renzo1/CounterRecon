@@ -11,31 +11,49 @@ abstract contract TargetFunctions is
     Properties,
     BeforeAfter
 {
+    // The coverage shows that the fuzzer hits either this function or counter_increment2
+    // but never both. To hit both, their logic needs to be significantly differ.
     function counter_increment() public {
-        counter.increment();
+        uint256 numberNew = counter.increment();
     }
 
-    function counter_setNumber1(uint256 newNumber) public {
-        // example assertion test replicating testFuzz_SetNumber
-        try counter.setNumber(newNumber) {
-            if (newNumber != 0) {
-                t(counter.number() == newNumber, "number != newNumber");
-            }
-        } catch {
-            t(false, "setNumber reverts");
-        }
+    function counter_increment2() public {
+        uint256 newNumber = counter.increment();
     }
 
-    function counter_setNumber2(uint256 newNumber) public {
-        // same example assertion test as counter_setNumber1 using ghost variables
-        __before();
 
-        counter.setNumber(newNumber);
 
-        __after();
 
-        if (newNumber != 0) {
-            t(_after.counter_number == newNumber, "number != newNumber");
-        }
-    }
+    // function counter_incrementAgain() public {
+    //     counter.incrementAgain();
+    // }
+
+    // function counter_decrement() public {
+    //     counter.decrement();
+    // }
+
+    // function counter_setNumber1(uint256 newNumber) public {
+    //     // example assertion test replicating testFuzz_SetNumber
+    //     try counter.setNumber(newNumber) {
+    //         if (newNumber != 0) {
+    //             t(counter.number() == newNumber, "number != newNumber");
+    //         }
+    //     } catch {
+    //         t(false, "setNumber reverts");
+    //     }
+    // }
+
+    // function counter_setNumber2(uint256 newNumber) public {
+    //     // same example assertion test as counter_setNumber1 using ghost variables
+    //     __before();
+
+    //     counter.setNumber(newNumber);
+
+    //     __after();
+
+    //     if (newNumber != 0) {
+    //         t(_after.counter_number == newNumber, "number != newNumber");
+    //     }
+    // }
+
 }

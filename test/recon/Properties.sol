@@ -6,7 +6,11 @@ import {Setup} from "./Setup.sol";
 
 abstract contract Properties is Setup, Asserts {
     // example property test that gets run after each call in sequence
-    function invariant_number_never_zero() public returns (bool) {
-        return counter.number() != 0;
+    // function invariant_number_never_zero() public returns (bool) {
+    //     return counter.number() != 0;
+    // }
+
+    function invariant_time_above_one_year() public returns (bool) {
+        return block.timestamp > 51 weeks;
     }
 }

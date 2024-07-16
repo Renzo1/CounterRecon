@@ -10,7 +10,17 @@ contract Counter {
         }
     }
 
-    function increment() public {
+    function increment() public returns (uint256 number) {
         number++;
+        // without this line, the fuzzer will only call one function between this and incrementAgain as they are identical
+        // number++; 
+    }
+
+    function incrementAgain() public {
+        number++;
+    }
+
+    function decrement() public {
+        number--;
     }
 }
